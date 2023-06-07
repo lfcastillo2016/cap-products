@@ -17,6 +17,7 @@ File or Folder | Purpose
 `readme.md` | this getting started guide
 
 
+
 ## Next Steps
 
 - Open a new terminal and run `cds watch` 
@@ -27,4 +28,6 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
+
+
 
