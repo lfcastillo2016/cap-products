@@ -65,9 +65,12 @@ entity Months {
 };
 
 entity ProductReview {
-    key Name    : String;
-        Rating  : Integer;
-        Comment : String;
+    key ID         : UUID;
+        Product_Id : UUID;
+        CreatedAt  : String;
+        Name       : String;
+        Rating     : Integer;
+        Comment    : String;
 };
 
 entity SalesData {
