@@ -48,7 +48,7 @@ entity Currencies {
         Description : String;
 };
 
-entity UnitOFMeasures {
+entity UnitOfMeasures {
     key ID          : String(2);
         Description : String;
 };
