@@ -33,7 +33,7 @@ entity Suppliers {
         Fax        : String;
 };
 
-entity Category {
+entity Categories {
     key ID   : String(1);
         Name : String;
 };
