@@ -74,6 +74,10 @@ entity ProductReview {
 };
 
 entity SalesData {
-    key DeliveryDate : DateTime;
-        Revenue      : Decimal(16, 2);
+    key ID               : UUID;
+        DeliveryDate     : DateTime;
+        Revenue          : Decimal(16, 2);
+        Product_Id       : UUID;
+        Currency_Id      : String(3);
+        DeliveryMonth_Id : String(2);
 }
