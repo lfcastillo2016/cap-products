@@ -5,20 +5,21 @@ entity Products {
         Name             : String;
         Description      : String;
         ImageUrl         : String;
-        ReleaseDate      : DateTime;
-        DiscontinuedDate : DateTime;
+        ReleaseDate      : DateTime default $now;
+        DiscontinuedDate : DateTime default $now;
         Price            : Decimal(16, 2);
         Height           : Decimal(16, 2);
         Width            : Decimal(16, 2);
         Depth            : Decimal(16, 2);
         Quantity         : Decimal(16, 2);
-        UnitOfMeasure_Id : String(2);
-        Currency_Id      : String(3);
-        Category_Id      : String(1);
-        Supplier_Id      : UUID;
-        DimensionUnit_Id : String(2);
-};
+        //Asociaciones
+        Supplier         : Association to Suppliers;
+        UnitOfMeasure    : Association to UnitOfMeasures;
+        Currency         : Association to Currencies;
+        DimensionUnit    : Association to DimensionUnits;
+        Category         : Association to Categories;
 
+};
 
 entity Suppliers {
     key ID         : UUID;
@@ -65,19 +66,19 @@ entity Months {
 };
 
 entity ProductReview {
-    key ID         : UUID;
-        Product_Id : UUID;
-        CreatedAt  : String;
-        Name       : String;
-        Rating     : Integer;
-        Comment    : String;
+    key ID        : UUID;
+        CreatedAt : String;
+        Name      : String;
+        Rating    : Integer;
+        Comment   : String;
+        Product   : Association to Products;
 };
 
 entity SalesData {
-    key ID               : UUID;
-        DeliveryDate     : DateTime;
-        Revenue          : Decimal(16, 2);
-        Product_Id       : UUID;
-        Currency_Id      : String(3);
-        DeliveryMonth_Id : String(2);
+    key ID            : UUID;
+        DeliveryDate  : DateTime;
+        Revenue       : Decimal(16, 2);
+        Product       : Association to Products;
+        Currency      : Association to Currencies;
+        DeliveryMonth : Association to Months;
 }
