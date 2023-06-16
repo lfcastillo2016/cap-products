@@ -12,7 +12,6 @@ entity Products {
         Width            : Decimal(16, 2);
         Depth            : Decimal(16, 2);
         Quantity         : Decimal(16, 2);
-        //Asociaciones
         Supplier         : Association to Suppliers;
         UnitOfMeasure    : Association to UnitOfMeasures;
         Currency         : Association to Currencies;
