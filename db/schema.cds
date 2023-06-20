@@ -17,7 +17,10 @@ entity Products {
         Currency         : Association to Currencies;
         DimensionUnit    : Association to DimensionUnits;
         Category         : Association to Categories;
-
+        SalesData        : Association to many SalesData
+                            on SalesData.Product = $self;
+        Reviews          : Association to many ProductReview
+                            on Reviews.Product = $self;
 };
 
 entity Suppliers {
@@ -31,12 +34,31 @@ entity Suppliers {
         Email      : String;
         Phone      : String;
         Fax        : String;
+        Product    : Association to many Products
+                     on Product.Supplier = $self;
 };
 
 entity Categories {
     key ID   : String(1);
         Name : String;
 };
+
+
+entity Orders {
+    key ID       : UUID;
+        Date     : Date;
+        Customer : String;
+        Item     : Composition of many OrderItems
+                       on Item.Order = $self;
+}
+
+entity OrderItems {
+    key ID       : UUID;
+        Order    : Association to Orders;
+        Product  : Association to Products;
+        Quantity : Integer;
+}
+
 
 entity StockAvailability {
     key ID          : Integer;
