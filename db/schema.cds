@@ -1,9 +1,16 @@
 namespace com.lfcr;
 
-entity Products {
-    key ID               : UUID;
-        Name             : String;
-        Description      : String;
+//Para quitar el ID de las entidades
+using {
+    cuid,
+    managed
+} from '@sap/cds/common';
+
+context materials   {
+
+    entity Products : cuid, managed {
+        Name             : localized String;
+        Description      : localized String;
         ImageUrl         : String;
         ReleaseDate      : DateTime default $now;
         DiscontinuedDate : DateTime default $now;
@@ -12,19 +19,58 @@ entity Products {
         Width            : Decimal(16, 2);
         Depth            : Decimal(16, 2);
         Quantity         : Decimal(16, 2);
-        Supplier         : Association to Suppliers;
+        Supplier         : Association to sales.Suppliers;
         UnitOfMeasure    : Association to UnitOfMeasures;
         Currency         : Association to Currencies;
         DimensionUnit    : Association to DimensionUnits;
         Category         : Association to Categories;
-        SalesData        : Association to many SalesData
-                            on SalesData.Product = $self;
+        SalesData        : Association to many sales.SalesData
+                               on SalesData.Product = $self;
         Reviews          : Association to many ProductReview
-                            on Reviews.Product = $self;
-};
+                               on Reviews.Product = $self;
+    };
 
-entity Suppliers {
-    key ID         : UUID;
+
+    entity Categories {
+        key ID   : String(1);
+            Name : localized String;
+    };
+
+    entity StockAvailability {
+        key ID          : Integer;
+            Description : localized String;
+            Product     : Association to Products;
+    };
+
+    entity Currencies {
+        key ID          : String(3);
+            Description : localized String;
+    };
+
+
+    entity UnitOfMeasures {
+        key ID          : String(2);
+            Description : localized String;
+    };
+
+    entity DimensionUnits {
+        key ID          : String(2);
+            Description : localized String;
+    };
+
+    entity ProductReview : cuid, managed {
+        // key ID        : UUID;
+        Name    : String;
+        Rating  : Integer;
+        Comment : String;
+        Product : Association to Products;
+    }
+} //Fin de Contexto Materiales
+
+context sales {
+
+    entity Suppliers : cuid, managed {
+        // key ID         : UUID;
         Name       : String;
         Street     : String;
         City       : String;
@@ -34,72 +80,40 @@ entity Suppliers {
         Email      : String;
         Phone      : String;
         Fax        : String;
-        Product    : Association to many Products
-                     on Product.Supplier = $self;
-};
+        Product    : Association to many materials.Products
+                         on Product.Supplier = $self;
+    };
 
-entity Categories {
-    key ID   : String(1);
-        Name : String;
-};
-
-
-entity Orders {
-    key ID       : UUID;
+    entity Orders : cuid {
+        // key ID       : UUID;
         Date     : Date;
         Customer : String;
         Item     : Composition of many OrderItems
                        on Item.Order = $self;
-}
+    };
 
-entity OrderItems {
-    key ID       : UUID;
+
+    entity OrderItems : cuid {
+        //key ID       : UUID;
         Order    : Association to Orders;
-        Product  : Association to Products;
+        Product  : Association to materials.Products;
         Quantity : Integer;
-}
+    };
 
 
-entity StockAvailability {
-    key ID          : Integer;
-        Description : String;
-};
+    entity Months {
+        key ID               : String(2);
+            Description      : localized String;
+            ShortDescription : localized String(3);
+    };
 
-entity Currencies {
-    key ID          : String(3);
-        Description : String;
-};
-
-entity UnitOfMeasures {
-    key ID          : String(2);
-        Description : String;
-};
-
-entity DimensionUnits {
-    key ID          : String(2);
-        Description : String;
-};
-
-entity Months {
-    key ID               : String(2);
-        Description      : String;
-        ShortDescription : String(3);
-};
-
-entity ProductReview {
-    key ID        : UUID;
-        CreatedAt : String;
-        Name      : String;
-        Rating    : Integer;
-        Comment   : String;
-        Product   : Association to Products;
-};
-
-entity SalesData {
-    key ID            : UUID;
+    entity SalesData : cuid, managed {
+        // key ID            : UUID;
         DeliveryDate  : DateTime;
         Revenue       : Decimal(16, 2);
-        Product       : Association to Products;
-        Currency      : Association to Currencies;
-        DeliveryMonth : Association to Months;
-}
+        Product       : Association to materials.Products;
+        Currency      : Association to materials.Currencies;
+        DeliveryMonth : Association to sales.Months;
+    };
+
+} //Fin de Contexto Sales
