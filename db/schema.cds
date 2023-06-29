@@ -9,7 +9,7 @@ using {
 context materials   {
 
     entity Products : cuid, managed {
-        Name             : localized String;
+        Name             : localized String; 
         Description      : localized String;
         ImageUrl         : String;
         ReleaseDate      : DateTime default $now;

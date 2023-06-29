@@ -22,28 +22,28 @@ define service MyService {
     entity Products          as
         select from lfcr.materials.Products {
             ID,
-            Name          as ProductName,
-            Description,
+            Name          as ProductName     @mandatory,
+            Description                      @mandatory,
             ImageUrl,
             ReleaseDate,
             DiscontinuedDate,
-            Price,
+            Price                            @mandatory,
             Height,
             Width,
             Depth,
             Quantity,
-            UnitOfMeasure as ToUnitOfMeasure,
-            Currency      as ToCurrency,
-            Category      as ToCategory,
-            Category.Name as Category,
+            UnitOfMeasure as ToUnitOfMeasure @mandatory,
+            Currency      as ToCurrency      @mandatory,
+            Category      as ToCategory      @mandatory,
+            Category.Name as Category        @readonly,
             DimensionUnit as ToDimensionUnit,
             SalesData,
             Supplier,
             Reviews
-
         };
 
     // ENTIDAD SUPLIER
+    @readonly
     entity Supplier          as
         select from lfcr.sales.Suppliers {
             ID,
@@ -67,6 +67,7 @@ define service MyService {
         };
 
     // ENTIDAD SALESDATA
+    @readonly
     entity SalesData         as
         select from lfcr.sales.SalesData {
             ID,
@@ -79,6 +80,7 @@ define service MyService {
         };
 
     //ENTIDAD STOCL AVAILABILITY
+    @readonly
     entity StockAvailability as
         select from lfcr.materials.StockAvailability {
             ID,
@@ -86,29 +88,33 @@ define service MyService {
             Product as ToProduct
         };
 
-// AYUDAS DE BUSQUEDA
+    // AYUDAS DE BUSQUEDA
+    @readonly
     entity VH_Categories     as
         select from lfcr.materials.Categories {
             ID   as Code,
             Name as Text
         };
 
-// AYUDAS DE BUSQUEDA
+    // AYUDAS DE BUSQUEDA
+    @readonly
     entity VH_Currencies     as
         select from lfcr.materials.Currencies {
-            ID   as Code,
+            ID          as Code,
             Description as Text
         };
 
-// AYUDAS DE BUSQUEDA
-entity VH_UnitOfMeasure  as
+    // AYUDAS DE BUSQUEDA
+    @readonly
+    entity VH_UnitOfMeasure  as
         select from lfcr.materials.UnitOfMeasures {
             ID          as Code,
             Description as Text
         };
-        
-// AYUDAS DE BUSQUEDA
-entity VH_DimensionUnits as
+
+    // AYUDAS DE BUSQUEDA
+    @readonly
+    entity VH_DimensionUnits as
         select
             ID          as Code,
             Description as Text
