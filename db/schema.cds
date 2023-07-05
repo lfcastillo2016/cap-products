@@ -6,10 +6,20 @@ using {
     managed
 } from '@sap/cds/common';
 
-context materials   {
+
+type Address {
+    Street     : String;
+    City       : String;
+    State      : String(2);
+    PostalCode : String(5);
+    Country    : String(3);
+}
+
+
+context materials {
 
     entity Products : cuid, managed {
-        Name             : localized String; 
+        Name             : localized String;
         Description      : localized String;
         ImageUrl         : String;
         ReleaseDate      : DateTime default $now;
@@ -77,11 +87,12 @@ context sales {
         State      : String(2);
         PostalCode : String(5);
         Country    : String(3);
-        Email      : String;
-        Phone      : String;
-        Fax        : String;
-        Product    : Association to many materials.Products
-                         on Product.Supplier = $self;
+        // Address;
+        Email   : String;
+        Phone   : String;
+        Fax     : String;
+        Product : Association to many materials.Products
+                      on Product.Supplier = $self;
     };
 
     entity Orders : cuid {

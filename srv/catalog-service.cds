@@ -120,4 +120,40 @@ define service MyService {
             Description as Text
         from lfcr.materials.DimensionUnits;
 
+
 }
+
+define service MyServiceLFCR {
+
+  entity SuppliersProduct as
+        select from lfcr.materials.Products[Name = 'Bread'
+    ]{
+        * ,
+        Name,
+        Description,
+        Supplier.PostalCode
+    }
+    where
+        Supplier.PostalCode = 98074;
+
+// ENTITY INFIX - PRUEBAS ADICIONALES
+entity EntityInfix       as
+        select Supplier[Name = 'Exotic Liquids'].Phone from lfcr.materials.Products
+        where
+            Products.Name = 'Bread';
+
+// ENTITY CON JOIN - PRUEBAS JOIN
+    entity EntityJoin        as
+        select Phone from lfcr.materials.Products
+        left join lfcr.sales.Suppliers as supp
+            on(
+                supp.ID = Products.Supplier.ID
+            )
+            and supp.Name = 'Exotic Liquids'
+        where
+            Products.Name = 'Bread';
+
+
+};
+
+
