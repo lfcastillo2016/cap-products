@@ -125,24 +125,23 @@ define service MyService {
 
 define service MyServiceLFCR {
 
-  entity SuppliersProduct as
-        select from lfcr.materials.Products[Name = 'Bread'
-    ]{
-        * ,
-        Name,
-        Description,
-        Supplier.PostalCode
-    }
-    where
-        Supplier.PostalCode = 98074;
+    entity SuppliersProduct  as
+        select from lfcr.materials.Products[Name = 'Bread']{
+            *,
+            Name,
+            Description,
+            Supplier.PostalCode
+        }
+        where
+            Supplier.PostalCode = 98074;
 
-// ENTITY INFIX - PRUEBAS ADICIONALES
-entity EntityInfix       as
+    // ENTITY INFIX - PRUEBAS ADICIONALES
+    entity EntityInfix       as
         select Supplier[Name = 'Exotic Liquids'].Phone from lfcr.materials.Products
         where
             Products.Name = 'Bread';
 
-// ENTITY CON JOIN - PRUEBAS JOIN
+    // ENTITY CON JOIN - PRUEBAS JOIN
     entity EntityJoin        as
         select Phone from lfcr.materials.Products
         left join lfcr.sales.Suppliers as supp
@@ -156,4 +155,24 @@ entity EntityInfix       as
 
 };
 
+define service Reports {
+    entity AverageRating     as projection on lfcr.reports.AverageRating;
 
+    entity EntityCasting     as
+        select
+            cast(
+                Price as      Integer
+            )     as Price,
+            Price as Price2 : Integer
+        from lfcr.materials.Products;
+
+
+    entity EntityExists      as
+        select from lfcr.materials.Products {
+            Name
+        }
+        where
+            exists Supplier[Name = 'Exotic Liquids'];
+
+
+};

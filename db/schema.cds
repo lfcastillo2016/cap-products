@@ -128,3 +128,15 @@ context sales {
     };
 
 } //Fin de Contexto Sales
+
+context reports {
+    entity AverageRating as
+        select from lfcr.materials.ProductReview {
+            Product.ID as ProductId,
+            avg(
+                Rating
+            )          as AverageRating : Decimal(16, 2)
+        }
+        group by
+            Product.ID;
+}//Fin de Contexto Reports
