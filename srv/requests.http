@@ -1,3 +1,8 @@
 # GET ORDERS
-
 GET http://localhost:4004/manage-orders/GetOrders
+
+
+# GET ORDER
+GET http://localhost:4004/manage-orders/GetOrders('client4@client4.com')
+
+
