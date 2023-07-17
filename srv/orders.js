@@ -10,7 +10,7 @@ const { Orders } = cds.entities("com.training");
 //     });
 
 // };
-
+//     //*************READ **********/
 //Con filtros
 module.exports = (srv) => {
     srv.on("READ", "Orders", async (req) => {
@@ -54,4 +54,37 @@ module.exports = (srv) => {
         console.log("Before End", returnData);
         return returnData;
     });
-};
+
+    // Se asgina la fecha del sistema
+    srv.before("CREATE", "Orders", (req) => {
+        req.data.CreatedOn = new Date().toISOString().slice(0, 10);
+        return req;
+      });
+
+//*************UPDATE **********/
+//************UPDATE******/
+srv.on("UPDATE", "Orders", async (req) => {
+    let returnData = await cds
+      .transaction(req)
+      .run([
+        UPDATE(Orders, req.data.ClientEmail).set({
+          FirstName: req.data.FirstName,
+          LastName: req.data.LastName,
+        }),
+      ])
+      .then((resolve, reject) => {
+        console.log("Resolve: ", resolve);
+        console.log("Reject: ", reject);
+        if (resolve[0] == 0) {
+          req.error(409, "Record Not Found ");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        req.error(err.code, err.message);
+      });
+    console.log("Before End", returnData);
+    return returnData;
+  });
+};//Fin modulo EXPORTS
+
