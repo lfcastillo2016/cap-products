@@ -10,9 +10,18 @@ const { Orders } = cds.entities("com.training");
 //     });
 
 // };
-//     //*************READ **********/
+
+
 //Con filtros
 module.exports = (srv) => {
+
+  //Before
+  srv.before("*", (req) => {
+    console.log(`Metodo: ${req.method}`);
+    console.log(`Target: ${req.target}`);
+  });
+
+  //*************READ **********/
   srv.on("READ", "Orders", async (req) => {
     if (req.data.ClientEmail !== undefined) {
       return await SELECT.from`com.training.Orders`

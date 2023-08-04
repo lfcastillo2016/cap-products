@@ -37,3 +37,14 @@ POST http://localhost:4004/manage-orders/cancelOrder
 Content-Type: application/json
 
 { "clientEmail" : "client1@client1.com"}
+
+
+### Get Customer Rate - Function Bound -- VINCULADA
+GET http://localhost:4004/manage-orders/Orders('client1@client1.com')/ManageOrders.getClientTaxRate(clientEmail='client1@client1.com')
+
+
+### Cancel Order  - Action Bound -- VINCULADA
+POST http://localhost:4004/manage-orders/Orders('client1@client1.com')/ManageOrders.cancelOrder
+Content-Type: application/json
+
+{ "clientEmail" : "client1@client1.com"}
