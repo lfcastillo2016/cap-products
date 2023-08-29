@@ -6,8 +6,8 @@ define service SapBackendExit {
         skip :false
     }
     @cds.autoexpose //Para autoexponer las asociaciones entre las entidades.
-    entity Incidents as
-        select from external.IncidentsSet;
+    //entity Incidents as select from external.IncidentsSet;
+    entity Incidents as projection on external.IncidentsSet;
 
 
 }
