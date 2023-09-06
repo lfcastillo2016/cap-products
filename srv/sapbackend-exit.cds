@@ -8,6 +8,8 @@ define service SapBackendExit {
     @cds.autoexpose //Para autoexponer las asociaciones entre las entidades.
     //entity Incidents as select from external.IncidentsSet;
     entity Incidents as projection on external.IncidentsSet;
-
-
+}
+@protocol: 'rest'
+service RestService{
+    entity Incidents as projection on SapBackendExit.Incidents;
 }

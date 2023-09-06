@@ -4,7 +4,8 @@ const cors = require("cors"); // se hace uso del cors para realizar peticiones d
 // donde tenemos el servidor de aplicaciones levantado, para ver los datos de una entidad externa
 // a traves del servidor CAP
 
-const adapterProxy = require("products/srv/sapbackend-exit.cds");
+const adapterProxy = require("@sap/cds-odata-v2-adapter-proxy");
+// const adapterProxy = require ("cap-products/srv/sapbackend-exit.cds");
 
 cds.on("bootstrap", (app) => {
     app.use(adapterProxy());
@@ -14,6 +15,9 @@ cds.on("bootstrap", (app) => {
     });
 });
 
+if(process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 module.exports = cds.server;
 
 
