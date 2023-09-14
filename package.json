@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "cds watch",
-    "watch-project1": "cds watch --open project1/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-project1": "cds watch --open product/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "features": {
@@ -54,6 +54,6 @@
     }
   },
   "sapux": [
-    "app/project1"
+    "app/product"
   ]
 }

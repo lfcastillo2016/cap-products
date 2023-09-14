@@ -49,7 +49,7 @@ context materials {
     entity StockAvailability {
         key ID          : Integer;
             Description : localized String;
-            Product     : Association to Products;
+            Product     : Association to materials.Products;
     };
 
     entity Currencies {
@@ -132,11 +132,35 @@ context sales {
 context reports {
     entity AverageRating as
         select from lfcr.materials.ProductReview {
-            Product.ID as ProductId,
-            avg(
-                Rating
-            )          as AverageRating : Decimal(16, 2)
+            Product.ID  as ProductId,
+            avg(Rating) as AverageRating : Decimal(16, 2)
         }
         group by
             Product.ID;
+    entity Products      as
+        select from lfcr.materials.Products
+        mixin {
+            ToStockAvailibilty : Association to lfcr.materials.StockAvailability
+                                     on ToStockAvailibilty.ID = $projection.StockAvailability;
+            ToAverageRating    : Association to AverageRating
+                                     on ToAverageRating.ProductId = ID;
+        }
+        into {
+            *,
+            ToAverageRating.AverageRating as Rating,
+            case
+                when
+                    Quantity >= 8
+                then
+                    3
+                when
+                    Quantity > 0
+                then
+                    2
+                else
+                    1
+            end        as StockAvailability : Integer,
+            ToStockAvailibilty
+        }
+
 }//Fin de Contexto Reports

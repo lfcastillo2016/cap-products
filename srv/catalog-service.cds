@@ -20,7 +20,7 @@ define service MyService {
 
     //Entidad PRODUCTOS
     entity Products          as
-        select from lfcr.materials.Products {
+        select from lfcr.reports.Products {
             ID,
             Name          as ProductName     @mandatory,
             Description                      @mandatory,
@@ -39,8 +39,10 @@ define service MyService {
             DimensionUnit as ToDimensionUnit,
             SalesData,
             Supplier,
-            Reviews
-        };
+            Reviews,
+            StockAvailability,
+            ToStockAvailibilty
+              };
 
     // ENTIDAD SUPLIER
     @readonly
