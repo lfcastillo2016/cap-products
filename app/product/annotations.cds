@@ -129,8 +129,8 @@ annotate service.Products with @(
 
 //Ayudas de busqueda
 annotate service.Products with {
-    //Category
-    ToCategory @(Common: {
+    // Ayuda para el campo Currency
+    ToCategory        @(Common: {
         Text     : {
             $value                : Category,
             ![@UI.TextArrangement]: #TextOnly,
@@ -152,4 +152,87 @@ annotate service.Products with {
             ]
         },
     });
+
+    //Ayuda para el campo Currency
+    ToCurrency        @(Common: {
+
+        ValueListWithFixedValues: false,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'VH_Currencies',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: ToCurrency_ID,
+                    ValueListProperty: 'Code'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'Text'
+                }
+            ]
+        },
+    });
+
+    // Ayuda de busqueda para Stock Availability
+    StockAvailability @(Common: {
+        ValueListWithFixedValues: true,
+        ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'StockAvailability',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: StockAvailability,
+                    ValueListProperty: 'ID'
+                },
+   /*             {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: StockAvailability,
+                    ValueListProperty: 'Description'
+                }*/
+            ]
+        },
+    })
+
 };
+
+/**
+ * Annotations for VH_Categories Entity
+ */
+annotate service.VH_Categories with {
+    Code @(
+        UI    : {Hidden: true},
+        Common: {Text: {
+            $value                : Text,
+            ![@UI.TextArrangement]: #TextOnly,
+        }}
+    );
+    Text @(UI: {HiddenFilter: true});
+};
+
+/*** Annotations for VH_Curency Entity */
+annotate service.VH_Currencies {
+    Code @(UI: {HiddenFilter: true});
+    Text @(UI: {HiddenFilter: true});
+}
+
+/*** Annotations for StockAvailability*/
+annotate service.StockAvailability {
+    ID @(Common: {Text: {
+        $value                : Description,
+        ![@UI.TextArrangement]: #TextOnly,
+    }})
+}
+
+/*** Annotations for annotate service.VH_UnitOfMeasure Entity */
+annotate service.VH_UnitOfMeasure {
+    Code @(UI: {HiddenFilter: true});
+    Text @(UI: {HiddenFilter: true});
+}
+
+/*** Annotations for annotate service.VH_UnitOfMeasure Entity */
+annotate service.VH_DimensionUnits {
+    Code @(UI: {HiddenFilter: true});
+    Text @(UI: {HiddenFilter: true});
+}
