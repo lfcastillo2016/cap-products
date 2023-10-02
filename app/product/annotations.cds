@@ -35,6 +35,21 @@ annotate service.Products with @(
             Label: 'DiscontinuedDate',
             Value: DiscontinuedDate,
         },
+        {
+            Label: 'StockAvailability',
+            Value: StockAvailability
+        },
+
+        {
+            $Type: 'UI.DataField',
+            Label: 'Rating',
+            Value: Rating
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Price',
+            Value: Price
+        },
     ]
 );
 
@@ -180,17 +195,16 @@ annotate service.Products with {
         ValueList               : {
             $Type         : 'Common.ValueListType',
             CollectionPath: 'StockAvailability',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: StockAvailability,
-                    ValueListProperty: 'ID'
-                },
-   /*             {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: StockAvailability,
-                    ValueListProperty: 'Description'
-                }*/
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: StockAvailability,
+                ValueListProperty: 'ID'
+            },
+            /*             {
+                             $Type            : 'Common.ValueListParameterInOut',
+                             LocalDataProperty: StockAvailability,
+                             ValueListProperty: 'Description'
+                         }*/
             ]
         },
     })
@@ -211,13 +225,17 @@ annotate service.VH_Categories with {
     Text @(UI: {HiddenFilter: true});
 };
 
-/*** Annotations for VH_Curency Entity */
+/**
+ * Annotations for VH_Curency Entity
+ */
 annotate service.VH_Currencies {
     Code @(UI: {HiddenFilter: true});
     Text @(UI: {HiddenFilter: true});
 }
 
-/*** Annotations for StockAvailability*/
+/**
+ * Annotations for StockAvailability
+ */
 annotate service.StockAvailability {
     ID @(Common: {Text: {
         $value                : Description,
@@ -225,13 +243,17 @@ annotate service.StockAvailability {
     }})
 }
 
-/*** Annotations for annotate service.VH_UnitOfMeasure Entity */
+/**
+ * Annotations for annotate service.VH_UnitOfMeasure Entity
+ */
 annotate service.VH_UnitOfMeasure {
     Code @(UI: {HiddenFilter: true});
     Text @(UI: {HiddenFilter: true});
 }
 
-/*** Annotations for annotate service.VH_UnitOfMeasure Entity */
+/**
+ * Annotations for annotate service.VH_UnitOfMeasure Entity
+ */
 annotate service.VH_DimensionUnits {
     Code @(UI: {HiddenFilter: true});
     Text @(UI: {HiddenFilter: true});

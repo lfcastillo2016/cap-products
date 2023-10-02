@@ -40,6 +40,7 @@ define service MyService {
             SalesData,
             Supplier,
             Reviews,
+            Rating,
             StockAvailability,
             ToStockAvailibilty
               };
