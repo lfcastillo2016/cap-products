@@ -122,8 +122,6 @@ define service MyService {
             ID          as Code,
             Description as Text
         from lfcr.materials.DimensionUnits;
-
-
 }
 
 define service MyServiceLFCR {

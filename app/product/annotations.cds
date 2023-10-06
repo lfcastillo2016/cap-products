@@ -12,6 +12,11 @@ annotate service.Products with @(
     UI.LineItem       : [
         {
             $Type: 'UI.DataField',
+            Label: 'ImageUrl',
+            Value: ImageUrl,
+        },
+        {
+            $Type: 'UI.DataField',
             Label: 'ProductName',
             Value: ProductName,
         },
@@ -21,9 +26,9 @@ annotate service.Products with @(
             Value: Description,
         },
         {
-            $Type: 'UI.DataField',
-            Label: 'ImageUrl',
-            Value: ImageUrl,
+            $Type : 'UI.DataFieldForAnnotation',
+            Label : 'Supplier',
+            Target: 'Supplier/@Communication.Contact'
         },
         {
             $Type: 'UI.DataField',
@@ -36,8 +41,9 @@ annotate service.Products with @(
             Value: DiscontinuedDate,
         },
         {
-            Label: 'StockAvailability',
-            Value: StockAvailability
+            Label      : 'StockAvailability',
+            Value      : StockAvailability,
+            Criticality: StockAvailability,
         },
 
         {
@@ -141,6 +147,12 @@ annotate service.Products with @(
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );
+
+//Para configurar el campo de imagen
+annotate service.Products with {
+    ImageUrl @(UI.IsImageURL: true)
+};
+
 
 //Ayudas de busqueda
 annotate service.Products with {
@@ -258,3 +270,28 @@ annotate service.VH_DimensionUnits {
     Code @(UI: {HiddenFilter: true});
     Text @(UI: {HiddenFilter: true});
 }
+
+/**
+ * Annotations for supplier entity
+ */
+
+annotate service.Supplier with @(Communication: {Contact: {
+    $Type: 'Communication.ContactType',
+    fn   : Name,
+    role : 'Supplier',
+    photo: 'sap-icon://supplier',
+    email: [{
+        type   : #work,
+        address: Email
+    }],
+    tel  : [
+        {
+            type: #work,
+            uri : Phone
+        },
+        {
+            type: #fax,
+            uri : Fax
+        }
+    ]
+}, });
