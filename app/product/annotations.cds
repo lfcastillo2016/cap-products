@@ -2,6 +2,14 @@ using MyService as service from '../../srv/catalog-service';
 
 annotate service.Products with @(
 
+    UI.HeaderInfo     : {
+        TypeName      : 'Product',
+        TypeNamePlural: 'Products',
+        ImageUrl      : ImageUrl,
+        Title         : {Value: ProductName},
+        Description   : {Value: Description}
+    },
+
     UI.SelectionFields: [
         ToCategory_ID,
         ToCurrency_ID,
@@ -47,9 +55,11 @@ annotate service.Products with @(
         },
 
         {
-            $Type: 'UI.DataField',
-            Label: 'Rating',
-            Value: Rating
+            // $Type: 'UI.DataField',
+            Label : 'Rating',
+            $Type : 'UI.DataFieldForAnnotation',
+            Target: '@UI.DataPoint#AverageRating'
+        // Value: Rating
         },
         {
             $Type: 'UI.DataField',
@@ -63,21 +73,21 @@ annotate service.Products with @(
     UI.FieldGroup #GeneratedGroup1: {
         $Type: 'UI.FieldGroupType',
         Data : [
-            {
-                $Type: 'UI.DataField',
-                Label: 'ProductName',
-                Value: ProductName,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Description',
-                Value: Description,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'ImageUrl',
-                Value: ImageUrl,
-            },
+            // {
+            //     $Type: 'UI.DataField',
+            //     Label: 'ProductName',
+            //     Value: ProductName,
+            // },
+            // {
+            //     $Type: 'UI.DataField',
+            //     Label: 'Description',
+            //     Value: Description,
+            // },
+            // {
+            //     $Type: 'UI.DataField',
+            //     Label: 'ImageUrl',
+            //     Value: ImageUrl,
+            // },
             {
                 $Type: 'UI.DataField',
                 Label: 'ReleaseDate',
@@ -92,6 +102,12 @@ annotate service.Products with @(
                 $Type: 'UI.DataField',
                 Label: 'Price',
                 Value: Price,
+            },
+
+            {
+                Label : 'Rating',
+                $Type : 'UI.DataFieldForAnnotation',
+                Target: '@UI.DataPoint#AverageRating'
             },
             {
                 $Type: 'UI.DataField',
@@ -295,3 +311,14 @@ annotate service.Supplier with @(Communication: {Contact: {
         }
     ]
 }, });
+
+/**
+ * Data Point for Average Rating
+ */
+
+annotate service.Products with @(UI.DataPoint #AverageRating: {
+    Value        : Rating,
+    Title        : 'Rating',
+    TargetValue  : 5,
+    Visualization: #Rating
+});
